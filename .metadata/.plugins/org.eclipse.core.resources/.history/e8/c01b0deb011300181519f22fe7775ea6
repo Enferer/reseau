@@ -1,0 +1,85 @@
+package exo4;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Calendar;
+import java.util.Locale;
+
+public class Daytime {
+	
+	ServerSocket ss;
+	Socket client;
+	InputStream in;
+	OutputStream out;
+
+	public void run() throws IOException {
+		
+		
+
+		ss = new ServerSocket(9876);
+		
+		client = ss.accept();
+		out = client.getOutputStream();
+		
+		out.write(new Calendar().getDisplayName(Calendar.DAY_OF_WEEK, Calendar.DAY_OF_MONTH, Locale.FRANCE)) {
+			
+			@Override
+			public void roll(int field, boolean up) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public int getMinimum(int field) {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+			
+			@Override
+			public int getMaximum(int field) {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+			
+			@Override
+			public int getLeastMaximum(int field) {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+			
+			@Override
+			public int getGreatestMinimum(int field) {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+			
+			@Override
+			protected void computeTime() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			protected void computeFields() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void add(int field, int amount) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+
+
+	public static void main(String[] args) {
+		Daytime dt = new Daytime();
+		try{dt.run();}catch(Exception e) {e.printStackTrace();}
+	}
+	
+}

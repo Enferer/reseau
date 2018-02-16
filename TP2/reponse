@@ -1,0 +1,14 @@
+Q1 - 
+	/etc/services
+	www.ietf.org/rfc/rfc1700.txt
+Q2 - 
+
+	Daytime	-> 13
+	Echo	-> 7
+	Chargen	-> 19
+	Telnet	-> 23
+	SSH	-> 22
+	SMTP	-> 25
+	POP3	-> 110
+	FTP	-> 21
+	IMAP2	-> 143

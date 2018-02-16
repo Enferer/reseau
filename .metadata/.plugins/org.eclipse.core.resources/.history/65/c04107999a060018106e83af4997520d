@@ -1,0 +1,31 @@
+package tp1;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+
+public class ClientUDP {
+	
+	private DatagramSocket dgSocket;
+
+	ClientUDP(int pSrv,String addr) throws IOException {
+		InetAddress i = InetAddress.getByAddress(addr.getBytes());
+		dgSocket = new DatagramSocket(pSrv,i);
+	}
+
+	void go() throws IOException {
+		DatagramPacket dgPacket = new DatagramPacket(new byte[0], 0);
+		dgSocket.send(dgPacket);
+		dgSocket.receive(dgPacket);
+		System.out.println("------" + dgPacket.getData());
+
+	}
+
+	public static void main(String[] args) throws IOException {
+		final int DEFAULT_PORT = 9876;
+		final String DEFAULT_ADRESS = "127.0.0.1/8";
+		new ClientUDP( DEFAULT_PORT, DEFAULT_ADRESS);
+	}
+	
+}

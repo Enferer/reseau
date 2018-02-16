@@ -1,0 +1,48 @@
+
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+
+public class ServeurUDP {
+	private DatagramSocket dgSocket;
+
+	ServeurUDP(int pSrv) throws IOException {
+		dgSocket = new DatagramSocket(pSrv);
+	}
+
+	void go() throws IOException {
+		DatagramPacket dgPacket = new DatagramPacket(new byte[3000], 3000);
+		String str;
+
+		while (true) {
+			dgSocket.receive(dgPacket);
+			System.out.println("Address : " + dgPacket.getSocketAddress().toString().substring(1));
+			byte[] tab = dgPacket.getData();
+			System.out.println("Message reçu : "+getAffichageTabByteToChar(tab));
+			
+			
+			dgPacket.setSocketAddress(dgPacket.getSocketAddress());
+			str = "Bonjour"; // Retour serveur
+					
+			byte[] bufDate = str.getBytes();
+			dgPacket.setData(bufDate, 0, bufDate.length);
+			
+			dgSocket.send(dgPacket);
+		}
+	}
+	
+	// Affiche un tableau de byte en chaine de caractére
+	private String getAffichageTabByteToChar(byte[] b) {
+		String res = "";
+		for (int i = 0; i < b.length; i++) {
+			res += (char)b[i];
+		}
+		return res;
+	}
+
+	public static void main(String[] args) throws IOException {
+		final int DEFAULT_PORT = 9876;
+		new ServeurUDP( args.length == 0 ? DEFAULT_PORT : Integer.parseInt(args[0]) ).go();
+	}
+}

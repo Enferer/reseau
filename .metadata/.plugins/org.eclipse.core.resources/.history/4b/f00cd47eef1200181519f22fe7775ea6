@@ -1,0 +1,30 @@
+package exo1;
+
+import javax.swing.text.DefaultEditorKit.CopyAction;
+
+public class CopieBinaire {
+
+	private String src;
+	private String dst;
+	
+	
+	public CopieBinaire(String src, String dst) {
+		this.src = src;
+		this.dst = dst;
+	}
+	
+	
+	public void copy() {
+		
+	}
+	
+	
+	
+	public static void main(String[] args) {
+		
+		CopieBinaire cp = new CopieBinaire(args[0], args[1]);
+		cp.copy();
+		
+	}
+	
+}

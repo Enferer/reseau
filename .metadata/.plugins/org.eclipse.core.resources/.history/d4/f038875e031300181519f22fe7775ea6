@@ -1,0 +1,62 @@
+package exo4;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Date;
+
+public class SrvBeg {
+
+	ServerSocket ss;
+	Socket client;
+	InputStream in;
+	OutputStream out;
+
+	public void run() throws IOException {
+		
+		
+
+		ss = new ServerSocket(9876);
+		
+		client = ss.accept();
+		out = client.getOutputStream();
+		
+		out.write(new Date().toString().getBytes());
+		out.write(new String("\n").getBytes());
+		out.close();
+		client.close();
+	}
+
+
+	public static void main(String[] args) {
+		Daytime dt = new Daytime();
+		try{dt.run();}catch(Exception e) {e.printStackTrace();}
+	}
+	
+	
+	
+}
+
+
+/*String msg = new String(dgPacket.getData());
+						
+			try {
+				nbr = Integer.valueOf(msg.split(":")[0]);
+				msg = msg.split(":")[1];
+				String[]tabMsg = msg.split(" ");
+				tabMsg[tabMsg.length-1] = tabMsg[tabMsg.length-1].split("\0|\n")[0];
+				
+				for (int i = 0; i < tabMsg.length; i++) {
+					
+					for (int j = 0; j < nbr; j++) {
+						reponse = reponse + tabMsg[i] + " ";
+					}
+				}	
+				
+				
+			}catch (NumberFormatException e) {
+				reponse = "1Erreur : multiplicateur manquant";
+			}
+*/

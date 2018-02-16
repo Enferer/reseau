@@ -1,0 +1,65 @@
+
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+
+public class ServeurUDP {
+	private DatagramSocket dgSocket;
+
+	ServeurUDP(int pSrv) throws IOException {
+		dgSocket = new DatagramSocket(pSrv);
+	}
+
+	void go() throws IOException {
+		DatagramPacket dgPacket = new DatagramPacket(new byte[300], 300);
+		String reponse;
+		int nbr;
+		while (true) {
+			reponse = "";
+			dgSocket.receive(dgPacket);
+			byte[] tab = dgPacket.getData();
+			
+			System.out.println("Address : " + dgPacket.getSocketAddress().toString().substring(1));
+			System.out.println("Numero reçu : "+getAffichageTabByteToChar(tab).charAt(0));
+			System.out.println("Message reçu : "+getAffichageTabByteToChar(tab).substring(1));
+			
+			dgPacket.setSocketAddress(dgPacket.getSocketAddress());
+			
+			reponse += getAffichageTabByteToChar(tab).charAt(0);
+			try {
+				nbr = (char)getAffichageTabByteToChar(tab).charAt(0)-48;
+				if(nbr<0 || nbr >9) nbr = 0;
+				System.out.println("#######"+nbr);
+				String[] msg = getAffichageTabByteToChar(tab).substring(1).split(" ");
+				for (int i = 0; i < msg.length; i++) {
+					for (int j = 0; j < nbr; j++) {
+						reponse += msg[i].substring(0, msg[i].length())+" ";
+					}
+				}
+			}catch (Exception e) {
+				reponse = "1Erreur : multiplicateur manquant";
+			}
+			
+			
+			byte[] bufDate = reponse.getBytes();
+			dgPacket.setData(bufDate, 0, bufDate.length);
+			
+			dgSocket.send(dgPacket);
+		}
+	}
+	
+	// Affiche un tableau de byte en chaine de caractére
+	private String getAffichageTabByteToChar(byte[] b) {
+		String res = "";
+		for (int i = 0; i < b.length; i++) {
+			res += (char)b[i];
+		}
+		return res;
+	}
+
+	public static void main(String[] args) throws IOException {
+		final int DEFAULT_PORT = 9876;
+		new ServeurUDP( args.length == 0 ? DEFAULT_PORT : Integer.parseInt(args[0]) ).go();
+	}
+}

@@ -1,0 +1,66 @@
+package tp1;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+
+public class ClientUDP {
+	
+	private DatagramSocket dg;
+	private DatagramPacket dp;
+	private String addr;
+	private int port;
+	ClientUDP(int pSrv,String addr) throws IOException {
+		this.port = pSrv;
+		this.addr = addr;
+		try {
+			dg = new DatagramSocket();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	/*void go(){
+	
+		try {
+			DatagramPacket dgPacket = new DatagramPacket(new byte[0], 0);
+			dgSocket.send(dgPacket);
+			dgSocket.receive(dgPacket);
+			System.out.println("------" + dgPacket.getData());
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+
+
+	}*/
+	public void connect() {
+		Scanner sc = new Scanner(System.in);
+		byte[] buffer = sc.nextLine().getBytes();
+		try {
+			dp = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(host), port);
+			dgSocket.send(dp);
+			DatagramPacket dpr = new DatagramPacket(new byte[3000],3000);
+		
+		catch (IOException e) {
+			System.err.println("Erreur lors de la reception");
+			e.printStackTrace();
+		}
+		String s="";
+		byte[] data = dpr.getData();
+		for(int i=0;i<data.length ; ++i) {
+			s+=Character.valueOf((char) data[i]);
+		}
+		System.out.println("Le serveur a renvoyé:"+s);
+		
+	}
+
+
+	public static void main(String[] args) throws IOException {
+		final int DEFAULT_PORT = 9876;
+		final String DEFAULT_ADRESS = "127.0.0.1";
+		new ClientUDP( DEFAULT_PORT, DEFAULT_ADRESS);
+	}
+	
+}

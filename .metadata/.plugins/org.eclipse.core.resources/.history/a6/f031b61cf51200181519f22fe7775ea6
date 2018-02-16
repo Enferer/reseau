@@ -1,0 +1,45 @@
+package exo3;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+
+public class GetHTTP {
+
+	public void run() {
+		
+		Socket sc; 
+		InputStream in;
+		OutputStream out;
+		String requete = "GET / HTTP/1.0\\n\\n";
+		
+		try {
+			
+			sc = new Socket ("localhost", 13);
+			in = sc.getInputStream();
+			out = sc.getOutputStream();
+			byte[] buf = new byte[2048];
+			
+			out.write();
+			
+			while(in.read(buf)!= -1) {
+				System.out.println(new String(buf));
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	public static void main(String[] args) {
+		
+		GetHTTP cd = new GetHTTP();
+		cd.run();
+		
+	}
+	
+	
+}

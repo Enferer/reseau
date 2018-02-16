@@ -1,0 +1,11 @@
+Exercice 1 :
+	
+	- Taille maximum 2^16 -> 65535 octets
+	  65535 - 20 - 8 = 65507
+	
+	- Voir le code
+	
+	- La taille optimal serait 1500 octets
+		1500-20(ip)-80(udp header)
+	
+	

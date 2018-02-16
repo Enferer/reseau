@@ -1,0 +1,56 @@
+package exo1;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
+public class CopieBinaire {
+
+	private String src;
+	private String dst;
+	
+	
+	public CopieBinaire(String src, String dst) {
+		this.src = src;
+		this.dst = dst;
+	}
+	
+	
+	public void copy() throws FileNotFoundException {
+		
+		FileInputStream fi;
+		FileOutputStream fo;
+		try {
+			
+			fi = new FileInputStream(dst);
+			fo = new FileOutputStream(src);
+			byte[] buf = new byte[2048];
+			
+			while(fi.read(buf)!= -1) {
+				fo.write(buf);
+			}
+			
+			fi.close();
+			fo.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		
+	}
+	
+	
+	
+	public static void main(String[] args) {
+		
+		CopieBinaire cp = new CopieBinaire(args[0], args[1]);
+		try {
+			
+			cp.copy();
+			
+		} catch (FileNotFoundException e) {e.printStackTrace();}
+		
+	}
+	
+}

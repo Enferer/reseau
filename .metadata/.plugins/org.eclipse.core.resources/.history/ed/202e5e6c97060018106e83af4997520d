@@ -1,0 +1,33 @@
+package tp1;
+
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.Enumeration;
+
+public class Interface {
+
+	public static void main(String[] args) throws UnknownHostException, SocketException {
+		
+		
+		Enumeration<NetworkInterface> a = NetworkInterface.getNetworkInterfaces();
+		NetworkInterface tmp;
+		
+		while(a.hasMoreElements()) {
+			tmp=a.nextElement();
+			System.out.print(tmp.getDisplayName()+" - MTU :  "+tmp.getMTU()+" - ip  ");
+			
+			Enumeration<InetAddress> e = tmp.getInetAddresses();
+			while(e.hasMoreElements()) { 
+				System.out.print(" : "+e.nextElement().getHostAddress());
+			}
+			
+			System.out.println("");
+		}
+ 
+	}
+
+}
