@@ -20,12 +20,11 @@ public class SrvBeg {
 	BufferedReader br;
 
 	public void run() throws IOException {
-		
-		
 
 		ss = new ServerSocket(9876);
 		
 		client = ss.accept();
+	
 		out = client.getOutputStream();
 		in = client.getInputStream();
 		
@@ -38,12 +37,15 @@ public class SrvBeg {
 
 	}
 
-
+	/*
+	 * Cette methode permet de creer la réponse grace au String passé en paramétre
+	 */
 	private String getReponse(String msg) {
 		String reponse ="";
 		int nbr;
 		try {
 			nbr = Integer.valueOf(msg.split(":")[0]);
+			if(nbr == 0)return "0\n";
 			msg = msg.split(":")[1];
 			String[]tabMsg = msg.split(" ");
 			tabMsg[tabMsg.length-1] = tabMsg[tabMsg.length-1].split("\0|\n")[0];
@@ -57,8 +59,8 @@ public class SrvBeg {
 			
 			
 		}catch (NumberFormatException e) {
-			reponse = "1Erreur : multiplicateur manquant";
-			return "";
+			reponse = "1Erreur : multiplicateur manquant\n";
+			return reponse;
 		}
 		return reponse;
 	}
@@ -66,22 +68,12 @@ public class SrvBeg {
 
 	private String getMessage(InputStream in) {
 		br = new BufferedReader(new InputStreamReader(in));
-		String msg = " ";
-		
-		String res = "";
 		try {
-			while((msg=br.readLine())!= null) {
-				
-				res += msg;
-			}
-		} catch (Exception e) {
-			System.out.println("boucle");
+			return br.readLine();
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		return res;
-		
-
+		return "erreur";
 	}
 
 

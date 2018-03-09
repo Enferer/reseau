@@ -12,3 +12,10 @@ Q2 -
 	POP3	-> 110
 	FTP	-> 21
 	IMAP2	-> 143
+	
+Exercice 4 - 
+	
+	Q1-
+	Les autres client n'arrive pas à se connecter car le premier client utilise déja la boucle principale du serveur
+	
+	
